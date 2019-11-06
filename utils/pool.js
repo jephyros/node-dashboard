@@ -20,6 +20,11 @@ module.exports =  async function(sql,params) {
 			
 			//await connection.beginTransaction();
 			const [rows] = await connection.query(sql,params);
+				// .catch(err=>{
+				// 	connection.release();
+				// 	throw new Error("Query Error11!");
+				// });
+
 		
 			//await connection.commit();
 			connection.release();

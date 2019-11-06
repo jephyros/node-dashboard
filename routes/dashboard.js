@@ -12,7 +12,7 @@ router.get('/',(req,res, next)=>{
 	
 	
 	let resultData ="";
-	let sql = 'select userid,username,inserttime from users where userid=?';
+	let sql = 'selec1t userid,username,inserttime from users where userid=?';
 	let param = ["cis"];	
 	pool(sql,param)
 		.then((result)=>{
