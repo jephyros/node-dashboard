@@ -1,0 +1,22 @@
+
+ <% layout('./layout/defaultlayout') -%>
+ <script>
+    $(document).ready(function() {
+
+        //조회 
+        $("#btnSeach").on('click',function(){
+            callSearch();
+        });
+    });
+     
+    function callSearch(){
+        alert('search');
+    }
+
+ </script>
+
+ <p>메인 페이지 </p>
+ 
+ <button type="button" class="btn btn-default" aria-label="Left Align" id="btnSeach">
+        <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+      </button>
