@@ -1,7 +1,7 @@
 const util = require('util'),
       Promise = require('bluebird')
 
-const Pool = require('./utils/pool')
+const Pool = require('./utils/pool_old')
 
 const pool = new Pool()
 

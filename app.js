@@ -3,8 +3,6 @@ const express  = require('express')
       ,app = express()
 
 
-const Pool = require('./utils/pool')
-var pool = new Pool()
 
 
 const loginRoutes = require('./routes/login')
