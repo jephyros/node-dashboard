@@ -7,7 +7,7 @@ const logger = require('../utils/logger');
 //dashboard Get Method
 exports.dashboard_get =(req,res, next)=>{
 	
-	logger.info(`DashBoard Get 호출`);
+	
 	let resultData ="";
 	let sql = "select userid,username,inserttime from users where userid like ?";
 	let param = ["%%"];	
@@ -18,7 +18,7 @@ exports.dashboard_get =(req,res, next)=>{
 			   res.render('dashboard/dashboard.ejs',{data: resultData});
 			  
 		}).catch(err=>{
-            logger.error(err);            
+            logger.error(err.toString());            
 			resultData = [];			
 			res.render('dashboard/dashboard.ejs',{data: resultData});
 			
