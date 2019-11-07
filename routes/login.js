@@ -1,12 +1,10 @@
+"use strict";
+
 const express = require('express');
 const router = express.Router();
 
-//const LoginController = 
+const LoginController = require('../controllers/login');
 
-router.get('/',(req,res, next)=>{
-	res.status(200).json({
-		message : 'loginpage'
-	})
-})
+router.get('/',LoginController.login_get);
 
 module.exports = router
