@@ -1,21 +1,16 @@
 const appRoot = require('app-root-path')    // app root 경로를 가져오는 lib
       ,winston = require('winston')            // winston lib
-      //,moment = require('moment-timezone')
+      ,moment = require('moment-timezone')
       ,process = require('process');
-      
+
  
 const { combine, timestamp, label, printf } = winston.format;
  
 const myFormat = printf(({ level, message, label, timestamp }) => {
-  return `${timestamp} [${label}] ${level}: ${message}`;    // log 출력 포맷 정의
+  var localtimestamp = moment(timestamp).tz('Asia/Seoul').format();
+  return `${localtimestamp} [${label}] ${level}: ${message}`;    // log 출력 포맷 정의
 });
 
-// const appendTimestamp = winston.format((info, opts) => {
-//   if(opts.tz)
-//     info.timestamp = moment().tz(opts.tz).format();
-//   return info;
-// });
- 
 const options = {
   // log파일
   file: {
