@@ -1,29 +1,27 @@
 "use strict";
 const express  = require('express')
       ,fs = require('fs')
+      ,path = require('path')
       ,morgan = require('morgan')    
+      ,moment = require('moment-timezone')
       ,engine = require('ejs-locals')      
       ,app = express();
 
-// morgan Setting
-morgan('combined');
-// a format string
-morgan(':remote-addr :method :url :uuid');
-// a custom function
-morgan(function (req, res) {
-    return req.method + ' ' + req.url + ' ' + req.uuid;
+// AccessLog(morgan) Setting =======
+const accessLogStream =  fs.createWriteStream(
+    path.join(__dirname, 'logs', 'access.log'),
+    { flags: 'a' }
+);
+morgan.token('date', (req, res) => {
+    return moment().tz('Asia/Seoul').format();
 })
-
+morgan.format('myformat', '[:date] ":method :url" :status :res[content-length] - :response-time ms');
+// =================================================
 const loginRoutes = require('./routes/login');
 const dashboardRoutes = require('./routes/dashboard');
 const mainRoutes = require('./routes/main');
 
-
-app.use(morgan());
-// app.use(morgan({
-//     format: 'dev',
-//     stream: fs.createWriteStream('./logs/access.log', {'flags': 'w'})
-//   }));
+app.use(morgan('combined', { stream: accessLogStream }))
 app.use(express.static('public'));
 app.set('view engine','ejs');
 app.engine('ejs', engine);

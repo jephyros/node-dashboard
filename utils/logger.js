@@ -1,25 +1,33 @@
-const appRoot = require('app-root-path');    // app root 경로를 가져오는 lib
-const winston = require('winston');            // winston lib
-const process = require('process');
+const appRoot = require('app-root-path')    // app root 경로를 가져오는 lib
+      ,winston = require('winston')            // winston lib
+      //,moment = require('moment-timezone')
+      ,process = require('process');
+      
  
 const { combine, timestamp, label, printf } = winston.format;
  
 const myFormat = printf(({ level, message, label, timestamp }) => {
   return `${timestamp} [${label}] ${level}: ${message}`;    // log 출력 포맷 정의
 });
+
+// const appendTimestamp = winston.format((info, opts) => {
+//   if(opts.tz)
+//     info.timestamp = moment().tz(opts.tz).format();
+//   return info;
+// });
  
 const options = {
   // log파일
   file: {
     level: 'info',
-    filename: `${appRoot}/logs/winston-test.log`, // 로그파일을 남길 경로
+    filename: `${appRoot}/logs/node-dashboard.log`, // 로그파일을 남길 경로
     handleExceptions: true,
     json: false,
     maxsize: 5242880, // 5MB
     maxFiles: 5,
     colorize: false,
     format: combine(
-      label({ label: 'winston-test' }),
+      label({ label: 'node-dashboard' }),
       timestamp(),
       myFormat    // log 출력 포맷
     )

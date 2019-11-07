@@ -1,5 +1,4 @@
 "use strict";
-const util = require('util');
 const pool = require('../utils/pool');
 
 const logger = require('../utils/logger');
@@ -7,7 +6,7 @@ const logger = require('../utils/logger');
 //dashboard Get Method
 exports.dashboard_get =(req,res, next)=>{
 	
-	
+	logger.info('대시보드 Get 호출');
 	let resultData ="";
 	let sql = "select userid,username,inserttime from users where userid like ?";
 	let param = ["%%"];	
