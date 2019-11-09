@@ -8,12 +8,19 @@ const express  = require('express')
       ,app = express();
 
 // AccessLog(morgan) Setting =======
-const accessLogStream =  fs.createWriteStream(
-    path.join(__dirname, 'logs', 'access.log'),
-    { flags: 'a' }
-);
+// const accessLogStream =  fs.createWriteStream(
+//     path.join(__dirname, 'logs', 'access.log'),
+//     { flags: 'a' }
+// );
+const accessLogStream =  require('file-stream-rotator').getStream({
+    filename: path.join(__dirname,'logs', 'access_%DATE%.log'),
+    frequency: 'daily',
+    verbose: false,
+    date_format: 'YYYYMMDD'
+  });
+
 morgan.token('date', (req, res) => {
-    return moment().tz('Asia/Seoul').format();
+    return moment().tz('Asia/Seoul').format('YYYY-MM-DD HH:mm:ss.SSS ZZ');
 })
 morgan.format('myformat', '[:date] ":method :url" :status :res[content-length] - :response-time ms');
 // =================================================
