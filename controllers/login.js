@@ -24,3 +24,11 @@ exports.login_get =(req,res, next)=>{
 		});
 	
 }
+//회원가입
+exports.signup_get =(req,res, next)=>{
+	
+	
+	res.render('login/signup.ejs')
+			  
+	
+}

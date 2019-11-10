@@ -27,17 +27,36 @@ morgan.format('myformat', '[:date] ":method :url" :status :res[content-length] -
 const loginRoutes = require('./routes/login');
 const dashboardRoutes = require('./routes/dashboard');
 const mainRoutes = require('./routes/main');
+const apiRouters = require('./routes/api');
 
 app.use(morgan('combined', { stream: accessLogStream }))
 app.use(express.static('public'));
 app.set('view engine','ejs');
 app.engine('ejs', engine);
 
+
 //Router
 app.use('/',mainRoutes);
 app.use('/login',loginRoutes);
 app.use('/dashboard',dashboardRoutes);
+app.use('/api',apiRouters);
 
+
+//router error 
+app.use((req, res, next) =>{
+  const error =new Error("Not found - CustomCIS");
+  error.status =404;
+  next(error);
+});
+
+app.use((error, req, res, next)=>{
+  res.status(error.status || 500);
+  res.json({
+      error: {
+          message : error.message
+      }
+  })
+});
 
 module.exports = app;
 
