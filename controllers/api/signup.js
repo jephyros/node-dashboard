@@ -52,7 +52,7 @@ exports.signup_post = (req,res, next)=>{
 				});			
 			}//아이디중복이아니면 
 			else{
-				var sql = "insert into users (userid,username,email,password) values(?,?,?,?)";
+				var sql = "insert into users (userid,username,email,password,inserttime) values(?,?,?,?,now())";
 				var param = [userid,username,email,password];	
 				pool.excuteSqlTx(sql,param)
 					.then((result)=>{
