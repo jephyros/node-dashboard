@@ -16,8 +16,7 @@ exports.signup_post = (req,res, next)=>{
 	let password = req.body.password;
 	
 	//4개값 필수 체크
-	var checkval = function () {
-		console.log("checkvalExcute");
+	var checkval = function () {		
 		return new Q(function(resolve,rejected){
 			if( userid =='' || username =='' || email =='' || password ==''){
 				resolve(false);
@@ -37,64 +36,63 @@ exports.signup_post = (req,res, next)=>{
 	//  var param = [userid];	
 	//  pool.excuteSql(sql,param).then((result)=>console.log(result));
 		
-
+		
 	function save() {
 
-			//아이디 중복 체크 
-		var sql = "select count(*) cnt from  users where userid =?";
-		var param = [userid];	
-		pool.excuteSql(sql,param)
-			.then((result)=>{
+		//아이디 중복 체크 
+	var sql = "select count(*) cnt from  users where userid =?";
+	var param = [userid];	
+	pool.excuteSql(sql,param)
+		.then((result)=>{
+			//console.log(result[0].cnt);
+			if (result[0].cnt > 0){
+				res.status(200).json({
+					resultcode : "E01",
+					resultmsg : "DupulicateID"
+				});			
+			}//아이디중복이아니면 
+			else{
+				var sql = "insert into users (userid,username,email,password) values(?,?,?,?)";
+				var param = [userid,username,email,password];	
+				pool.excuteSqlTx(sql,param)
+					.then((result)=>{
 
-				console.log(result[0].cnt);
+						//console.log(result);
 
-				if (result[0].cnt > 0){
-					res.status(200).json({
-						resultcode : "E01",
-						resultmsg : "DupulicateID"
-					});			
-				}//아이디중복이아니면 
-				else{
-					var sql = "insert into users (userid,username,email,password) values(?,?,?,?)";
-					var param = [userid,username,email,password];	
-					pool.excuteSqlTx(sql,param)
-						.then((result)=>{
-
-							//console.log(result);
-
-							res.status(200).json({
-								resultcode : "200",
-								resultmsg : "success"
-							});			
-							
-						}).catch(err=>{
-							logger.error(err.toString());            
-							res.status(500).json({
-								resultcode : "500",
-								resultmsg : "save Error"
-							});
-							
+						res.status(200).json({
+							resultcode : "200",
+							resultmsg : "success"
+						});			
+						
+					}).catch(err=>{
+						logger.error(err.toString());            
+						res.status(500).json({
+							resultcode : "500",
+							resultmsg : "save Error"
 						});
+						
+					});
 
-				}
-				
-				
-			}).catch(err=>{
-				logger.error(err.toString());            
-				res.status(500).json({
-					resultcode : "500",
-					resultmsg : "save Error"
-				});
-				
+			}
+			
+			
+		}).catch(err=>{
+			logger.error(err.toString());            
+			res.status(500).json({
+				resultcode : "500",
+				resultmsg : "save Error"
 			});
+			
+		});
 
-		
+
 	}
+	
 
 	var check = checkval();
 	//var saveexe =
 	check.then(result =>{
-		console.log(result);
+		//console.log(result);
 		if (result == true){
 			save()
 		}else{
