@@ -1,17 +1,13 @@
 "use strict";
-const express  = require('express')
-      ,fs = require('fs')
+const express  = require('express')      
       ,path = require('path')
       ,morgan = require('morgan')    
       ,moment = require('moment-timezone')
-      ,engine = require('ejs-locals')      
+      ,engine = require('ejs-locals')            
       ,app = express();
 
-// AccessLog(morgan) Setting =======
-// const accessLogStream =  fs.createWriteStream(
-//     path.join(__dirname, 'logs', 'access.log'),
-//     { flags: 'a' }
-// );
+
+
 const accessLogStream =  require('file-stream-rotator').getStream({
     filename: path.join(__dirname,'logs', 'access_%DATE%.log'),
     frequency: 'daily',
@@ -31,6 +27,8 @@ const apiRouters = require('./routes/api');
 
 app.use(morgan('combined', { stream: accessLogStream }))
 app.use(express.static('public'));
+app.use(express.json())
+//app.use(bodyParser().json())
 app.set('view engine','ejs');
 app.engine('ejs', engine);
 

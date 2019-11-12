@@ -10,7 +10,34 @@
     });
         
     function callSave(){
-        alert('save');
+
+        var $form = $('form[name="frmreg"]');
+        var params = $form.serializeObject();//.serialize();
+
+        $.ajax({
+				url:'/api/signup',
+                type : 'post',                
+                dataType: 'json',
+                contentType:"application/json",                
+                data : JSON.stringify(params),                
+				//cache:false,
+				error:function(request,status,error){
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				},
+				success: function(res){
+                    alert('resultcode:' + res.resultcode);
+					// if (!Ajax.checkResult(res)) {
+					// 	return;
+					// }
+					//alert('저장되었습니다. ');
+					//init();
+					//callList(1);
+
+
+				}
+
+            });
+            
         
     }
 </script>
@@ -23,7 +50,7 @@
         <h3>회원가입</h3>    
     </div> 
     <div class="sigiup">
-        <form name = "regform">
+        <form name = "frmreg">
             <div class="input-group">
                 <span class="input-group-addon" id="sizing-addon2"></span>
                 <input type="text" class="form-control" placeholder="Userid" aria-describedby="sizing-addon2" name = "userid" id  = "userid">
