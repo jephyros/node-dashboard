@@ -1,4 +1,6 @@
 "use strict";
+
+
 const util = require('util');
 const pool = require('../utils/pool')
 
@@ -6,6 +8,10 @@ const pool = require('../utils/pool')
 //dashboard Get Method
 exports.login_get =(req,res, next)=>{
 	
+	//session test 
+	var session =req.session;
+	session.username = "cis";
+
 	
 	let resultData ="";
 	let sql = "select userid,username,inserttime from users where userid like ?";
@@ -27,8 +33,10 @@ exports.login_get =(req,res, next)=>{
 //회원가입
 exports.signup_get =(req,res, next)=>{
 	
-	
-	res.render('login/signup.ejs')
+	var session =req.session;
+
+	let username = session.username;
+	res.render('login/signup.ejs',{data:username})
 			  
 	
 }

@@ -1,8 +1,10 @@
 "use strict";
 const Q = require("bluebird");
 
+
 const pool = require('../../utils/pool');
 const logger = require('../../utils/logger');
+const utils = require('../../utils/utils');
 
 //dashboard Get Method
 exports.signup_post = (req,res, next)=>{
@@ -53,7 +55,7 @@ exports.signup_post = (req,res, next)=>{
 			}//아이디중복이아니면 
 			else{
 				var sql = "insert into users (userid,username,email,password,inserttime) values(?,?,?,?,now())";
-				var param = [userid,username,email,password];	
+				var param = [userid,username,email,utils.encryptSHA2(password)];	
 				pool.excuteSqlTx(sql,param)
 					.then((result)=>{
 

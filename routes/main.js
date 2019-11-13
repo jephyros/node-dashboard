@@ -4,7 +4,7 @@ const router = express.Router();
 //const LoginController = 
 
 router.get('/',(req,res, next)=>{
-	res.render('index.ejs',{"name" : "CIS", "title":"test title"})
+	res.render('index.ejs')
 })
 
 module.exports = router

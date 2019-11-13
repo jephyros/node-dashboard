@@ -1,10 +1,19 @@
 "use strict";
-const express  = require('express')      
-      ,path = require('path')
-      ,morgan = require('morgan')    
-      ,moment = require('moment-timezone')
-      ,engine = require('ejs-locals')            
-      ,app = express();
+const express  = require('express');
+const session = require('express-session');
+const redis = require('redis');
+const redisStore = require('connect-redis')(session);
+const path = require('path');
+const morgan = require('morgan');
+const moment = require('moment-timezone');
+const engine = require('ejs-locals');       
+
+const app = express();
+const client = redis.createClient(6379,'localhost');
+
+
+
+
 
 
 
@@ -21,14 +30,29 @@ morgan.token('date', (req, res) => {
 morgan.format('myformat', '[:date] ":method :url" :status :res[content-length] - :response-time ms');
 // =================================================
 const loginRoutes = require('./routes/login');
+const logoutRoutes = require('./routes/logout');
 const dashboardRoutes = require('./routes/dashboard');
 const mainRoutes = require('./routes/main');
 const apiRouters = require('./routes/api');
 
+
+
 app.use(morgan('combined', { stream: accessLogStream }))
 app.use(express.static('public'));
 app.use(express.json())
-//app.use(bodyParser().json())
+app.use(session({
+  secret: '@#@$MYSIGN#@$#$',
+  //Redis서버의 설정정보
+  store : new redisStore({
+      client: client,
+      ttl : 260
+  }),
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 // 쿠키 유효기간 60분
+  }
+ }));
 app.set('view engine','ejs');
 app.engine('ejs', engine);
 
@@ -36,6 +60,7 @@ app.engine('ejs', engine);
 //Router
 app.use('/',mainRoutes);
 app.use('/login',loginRoutes);
+app.use('/logout',logoutRoutes);
 app.use('/dashboard',dashboardRoutes);
 app.use('/api',apiRouters);
 
