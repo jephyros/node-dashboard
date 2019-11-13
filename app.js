@@ -70,22 +70,26 @@ app.use('/logout',logoutRoutes);
 app.use('/dashboard',dashboardRoutes);
 app.use('/api',apiRouters);
 
-
-//router error 
-app.use((req, res, next) =>{
-  const error =new Error("Not found - CustomCIS");
-  error.status =404;
-  next(error);
+app.use('*',(req, res, next )=>{
+  res.render('Error404.ejs');
 });
 
-app.use((error, req, res, next)=>{
-  res.status(error.status || 500);
-  res.json({
-      error: {
-          message : error.message
-      }
-  })
-});
+// //router error 
+// app.use((req, res, next) =>{
+//   const error =new Error("Not found - CustomCIS");
+//   error.status =404;
+//   next(error);
+// });
+
+// app.use((error, req, res, next)=>{
+//   res.status(error.status || 404);  
+//   res.render('dashboard/dashboard.ejs');
+//   res.json({
+//       error: {
+//           message : error.message
+//       }
+//   })
+// });
 
 module.exports = app;
 
