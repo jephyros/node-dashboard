@@ -3,10 +3,12 @@ const express  = require('express');
 const session = require('express-session');
 const redis = require('redis');
 const redisStore = require('connect-redis')(session);
+const passport = require('passport');
 const path = require('path');
 const morgan = require('morgan');
 const moment = require('moment-timezone');
 const engine = require('ejs-locals');       
+
 
 const app = express();
 const client = redis.createClient(6379,'localhost');
@@ -53,6 +55,10 @@ app.use(session({
     maxAge: 1000 * 60 * 60 // 쿠키 유효기간 60분
   }
  }));
+//passportSetting
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.set('view engine','ejs');
 app.engine('ejs', engine);
 
