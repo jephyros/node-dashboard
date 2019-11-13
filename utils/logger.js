@@ -23,7 +23,7 @@ const dailyRotateFileTransport = new transports.DailyRotateFile({
   datePattern: "YYYYMMDD",
   zippedArchive: true,
   maxSize: "20m",
-  maxFiles: "14d"
+  maxFiles: "3d"
 })
 
 const logger = createLogger({
