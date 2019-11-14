@@ -1,6 +1,5 @@
 "use strict";
-const Q = require("bluebird");
-
+const Promise = require("bluebird");
 
 const pool = require('../../utils/pool');
 const logger = require('../../utils/logger');
@@ -19,7 +18,7 @@ exports.signup_post = (req,res, next)=>{
 	
 	//4개값 필수 체크
 	var checkval = function () {		
-		return new Q(function(resolve,rejected){
+		return new Promise(function(resolve,rejected){
 			if( userid =='' || username =='' || email =='' || password ==''){
 				resolve(false);
 				// res.status(400).json({
