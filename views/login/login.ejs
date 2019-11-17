@@ -5,12 +5,34 @@
 
  </script>
 
-<H1>로그인</H1>
+
 
 <p><ol>
-<% data.forEach(function(val){ %>
-    <li><%= val.userid %></li>
-<% }) %>
-</ol></p>
 
-<p><a class="btn btn-primary btn-lg" href="/login/signup" role="button">회원가입</a></p>
+<div class="container">
+    <div class="login">
+        
+        <H1>로그인</H1>
+        
+        <form action="/login" method="post" name="frm_login" id="frm_login">
+            <div class="input-group">
+                <span class="input-group-addon" id="sizing-addon2"></span>
+                <input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon2" name = "username" id = "username">
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon" id="sizing-addon2"></span>
+                <input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon2" name = "password" id = "password">
+            </div>
+            <div class="text-center">
+                <span class="label label-warning"><%= loginmessage%></span>
+            </div>
+            <div class="text-right">
+                <input type="submit"  value="Login"/>
+            </div>
+
+        </form>
+    </div>    
+    <!-- <div class="text-right">
+        <p><a class="btn btn-primary btn-lg" href="/login/signup" role="button">회원가입</a></p>
+    </div> -->
+</div>
