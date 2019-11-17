@@ -4,22 +4,17 @@ const session = require('express-session');
 const redis = require('redis');
 const redisStore = require('connect-redis')(session);
 const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
 const path = require('path');
 const morgan = require('morgan');
 const moment = require('moment-timezone');
 const engine = require('ejs-locals');       
 //var flash = require('connect-flash');
 
+const passportConfig = require('./utils/passport'); // 여기
+
 
 const app = express();
 const client = redis.createClient(6379,'localhost');
-
-
-
-
-
-
 
 const accessLogStream =  require('file-stream-rotator').getStream({
     filename: path.join(__dirname,'logs', 'access_%DATE%.log'),
@@ -63,37 +58,12 @@ app.use(session({
 //passportSetting
 app.use(passport.initialize());
 app.use(passport.session());
-passport.serializeUser(function (user, done) {
-  done(null, user)
-});
+passportConfig();
 
-passport.deserializeUser(function (user, done) {
-  done(null, user);
-});
-
-passport.use(new LocalStrategy({
-    usernameField: 'username',
-    passwordField: 'password',
-    session: true, // 세션에 저장 여부
-    passReqToCallback: true
-  }, function ( req, username, password, done) {
-      console.log('>>>>>>>>>>>>>>debug');
-      //return done(null, username); // 검증 성공
-      if(username === 'cis' && password === '1234'){
-        return done(null, {
-          'user_id': username,
-        });
-      }else{
-        //return done(false, null)
-        return done(null, false, { message: '비밀번호가 틀렸습니다' }); // 임의 에러 처리
-      }
-  }));
-
-
-  var isAuthenticated = function (req, res, next) {
-    if (req.isAuthenticated())
+const isAuthenticated = function (req, res, next) {
+  if (req.isAuthenticated())
       return next();
-    res.redirect('/login');
+      res.redirect('/login');
   };
   
 //app.use(flash());
