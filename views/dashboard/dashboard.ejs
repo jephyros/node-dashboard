@@ -5,10 +5,13 @@
 
  </script>
 
-<H1>회원목록</H1>
+<div class="container">
 
-<p><ol>
-<% data.forEach(function(val){ %>
-    <li><%= val.username %></li>
-<% }) %>
-</ol></p>
+<H3>회원목록</H3>
+        <ol>
+        <% data.forEach(function(val){ %>
+            <li><%= val.username %></li>
+        <% }) %>
+        </ol>
+
+</div>

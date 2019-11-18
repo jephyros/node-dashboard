@@ -1,0 +1,94 @@
+
+ <% layout('../layout/defaultlayout') -%>
+ <script>
+     $(document).ready(function() {
+
+        //조회 
+        $("#btnSave").on('click',function(){
+            callSave();
+        });
+    });
+
+    function callSave(){
+
+    var $form = $('form[name="frmreg"]');
+    var params = $form.serializeObject();//.serialize();
+
+    $.ajax({
+            url:'/api/mypage',
+            type : 'post',                
+            dataType: 'json',
+            contentType:"application/json",                
+            data : JSON.stringify(params),                
+            //cache:false,
+            error:function(request,status,error){
+                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            },
+            success: function(res){
+                if (res.resultcode == '200'){
+                    alert("수정되었습니다.")
+                    document.location.href = '/';
+                    return false;
+                }
+                
+                alert("에러발생 에러코드 code: " + res.resultcode + " 에러메세지 :" + res.resultmsg);
+                return false;
+                // if (!Ajax.checkResult(res)) {
+                // 	return;
+                // }
+                //alert('저장되었습니다. ');
+                //init();
+                //callList(1);
+
+
+            }
+
+        });
+        
+
+    }
+
+
+ </script>
+
+
+
+<p><ol>
+
+<div class="container">
+    <div class="login">
+        
+        <form action="#" method="post" name="frmreg"" id="frmreg">
+            <H3 class="text-left">마이페이지</H3>
+            <div class="input-group">
+                <span class="input-group-addon" id="sizing-addon2"></span>
+                <input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon2" name = "userid" id = "userid"
+                value="<%= data.userid%>" readonly>
+            </div>
+            <div class="input-group">
+                    <span class="input-group-addon" id="sizing-addon2"></span>
+                    <input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon2" name = "username" id = "username"
+                    value="<%= data.username%>">
+                </div>
+            <div class="input-group">
+                <span class="input-group-addon" id="sizing-addon2"></span>
+                <input type="text" class="form-control" placeholder="E-Mail" aria-describedby="sizing-addon2" name = "useremail" id = "useremail"
+                value="<%= data.email%>">
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon" id="sizing-addon2"></span>
+                <input type="password" class="form-control" placeholder="Password" aria-describedby="sizing-addon2" name = "password" id = "password">
+            </div>
+            
+            <!-- <div class="text-center">
+                <span class="label label-warning"></span>
+            </div> -->
+            <div class="text-center">
+                <input type="submit" class="btn btn-primary btn-sm" id="btnSave" value="수정"/>
+                
+            </div>
+
+        </form>
+    </div>    
+    
+</div>

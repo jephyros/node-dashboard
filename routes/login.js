@@ -22,5 +22,6 @@ router.get('/loginFailure', (req,res,next)=>{
 });
 
 router.get('/signup',LoginController.signup_get);
+router.get('/mypage',LoginController.mypage_get);
 
 module.exports = router

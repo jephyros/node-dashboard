@@ -8,6 +8,7 @@ const path = require('path');
 const morgan = require('morgan');
 const moment = require('moment-timezone');
 const engine = require('ejs-locals');       
+const favicon = require('serve-favicon');
 //var flash = require('connect-flash');
 
 const passportConfig = require('./utils/passport'); // 여기
@@ -37,6 +38,7 @@ const apiRouters = require('./routes/api');
 
 
 app.use(morgan('combined', { stream: accessLogStream }))
+app.use(favicon(__dirname + '/public/images/favicon.ico'));
 app.use(express.static('public'));
 //app.use(express.bodyParser());
 app.use(express.json())
@@ -63,14 +65,16 @@ passportConfig();
 
 app.use(function(req, res, next) {
   //console.log("ReqSession : ", req.user)  
-  res.locals.user = req.user;
+  res.locals.user = req.user;  
+  res.locals.loginwarnmsg = "";  
   next();
 });
 
-const isAuthenticated = function (req, res, next) {
-  if (req.isAuthenticated())
+const isAuthenticated = function (req, res, next) {  
+  if (req.isAuthenticated())      
       return next();
-      res.redirect('/login');
+      //res.redirect('/login');
+      res.render('login/login.ejs',{loginmessage : '해당메뉴에 권한이 없습니다. 로그인이 필요합니다.'});
   };
   
 //app.use(flash());

@@ -25,7 +25,16 @@
 					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				},
 				success: function(res){
-                    alert('resultcode:' + res.resultcode);
+                    if (res.resultcode == '200'){
+                        alert("회원가입되었습니다.")
+                        document.location.href = '/';
+                        return false;
+                    }
+                    if (res.resultcode == 'E01'){
+                        alert("해당아이디는 이미존재합니다. 다른 아이디를 사용하세요");
+                        return false;
+                    }
+                     alert("에러발생 에러코드 code: " + res.resultcode + " 에러메세지 :" + res.resultmsg);
 					// if (!Ajax.checkResult(res)) {
 					// 	return;
 					// }
@@ -47,8 +56,7 @@
 
 <div class="container">
     <div class="page-header">
-        <h3>회원가입</h3>    
-        <p><%= data%></p>
+        <h3>회원가입</h3>            
         
     </div> 
     <div class="sigiup">
