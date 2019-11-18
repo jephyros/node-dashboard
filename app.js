@@ -9,6 +9,7 @@ const morgan = require('morgan');
 const moment = require('moment-timezone');
 const engine = require('ejs-locals');       
 const favicon = require('serve-favicon');
+
 //var flash = require('connect-flash');
 
 const passportConfig = require('./utils/passport'); // 여기
