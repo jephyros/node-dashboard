@@ -7,7 +7,11 @@
             <ul class="nav nav-pills">
                 <li role="presentation" ><a href="/">Home</a></li>
                 <li role="presentation"><a href="/dashboard">Dashboard</a></li>
-                <li role="presentation"><a href="/login">login</a></li>
+                <% if(user){ %>                   
+                   <li role="presentation"><a href="/login/mypage"><%= user.username%></a></li>                   
+                <% } else { %>
+                    <li role="presentation"><a href="/login">login</a></li>
+                <% }  %>
                 <li role="presentation"><a href="/logout">logout</a></li>
             </ul>
                 

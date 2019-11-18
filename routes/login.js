@@ -15,12 +15,9 @@ router.post('/', passport.authenticate('local', {
         res.redirect('/');
       });
 
-router.get('/loginFailure', (req,res,next)=>{
-    //console.log('Login failure',req.body)
-    //res.redirect('/login');
+router.get('/loginFailure', (req,res,next)=>{    
     res.render('login/login.ejs',{loginmessage : '아이디와비번을 확인하세요'});
-    //res.status(403);
-    //res.render('index.ejs');
+    
     
 });
 

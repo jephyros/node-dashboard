@@ -11,10 +11,7 @@ exports.login_get = (req,res, next)=>{
 	res.render('login/login.ejs',{loginmessage : ''});
 	
 }
-//로그인 처리
-exports.login_post = (req, res, next) =>{
 
-}
 //회원가입
 exports.signup_get =(req,res, next)=>{
 	

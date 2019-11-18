@@ -9,7 +9,7 @@ exports.dashboard_get =(req,res, next)=>{
 
 
 	logger.info('대시보드 Get 호출');
-	console.log('userinfo',req.user);
+	//console.log('userinfo',req.user.username);
 	let resultData ="";
 	let sql = "select userid,username,inserttime from users where userid like ?";
 	let param = ["%%"];	

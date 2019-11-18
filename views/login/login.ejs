@@ -12,27 +12,30 @@
 <div class="container">
     <div class="login">
         
-        <H1>로그인</H1>
+        
         
         <form action="/login" method="post" name="frm_login" id="frm_login">
+            <H2 class="text-center">로그인</H2>
             <div class="input-group">
                 <span class="input-group-addon" id="sizing-addon2"></span>
                 <input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon2" name = "username" id = "username">
             </div>
             <div class="input-group">
                 <span class="input-group-addon" id="sizing-addon2"></span>
-                <input type="text" class="form-control" placeholder="Username" aria-describedby="sizing-addon2" name = "password" id = "password">
+                <input type="text" class="form-control" placeholder="Password" aria-describedby="sizing-addon2" name = "password" id = "password">
             </div>
+            <% if(loginmessage != ''){ %>
+                <div class="alert alert-warning text-center" role="alert"><%= loginmessage%></div>
+            <% } %>
+            <!-- <div class="text-center">
+                <span class="label label-warning"></span>
+            </div> -->
             <div class="text-center">
-                <span class="label label-warning"><%= loginmessage%></span>
-            </div>
-            <div class="text-right">
-                <input type="submit"  value="Login"/>
+                <input type="submit" class="btn btn-primary btn-sm" value="Login"/>
+                <a class="btn btn-info btn-sm" href="/login/signup" role="button">회원가입</a>
             </div>
 
         </form>
     </div>    
-    <!-- <div class="text-right">
-        <p><a class="btn btn-primary btn-lg" href="/login/signup" role="button">회원가입</a></p>
-    </div> -->
+    
 </div>

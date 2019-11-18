@@ -59,6 +59,13 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 passportConfig();
+//세션의 User정보표기
+
+app.use(function(req, res, next) {
+  //console.log("ReqSession : ", req.user)  
+  res.locals.user = req.user;
+  next();
+});
 
 const isAuthenticated = function (req, res, next) {
   if (req.isAuthenticated())
