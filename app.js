@@ -39,7 +39,7 @@ const apiRouters = require('./routes/api');
 
 
 app.use(morgan('combined', { stream: accessLogStream }))
-app.use(favicon(__dirname + '/public/images/favicon.ico'));
+app.use(favicon('./public/images/favicon.ico'));
 app.use(express.static('public'));
 //app.use(express.bodyParser());
 app.use(express.json())
