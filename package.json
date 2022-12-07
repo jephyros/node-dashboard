@@ -17,7 +17,7 @@
     "crypto-js": "^3.1.9-1",
     "ejs": "^2.7.1",
     "ejs-locals": "^1.0.2",
-    "express": "^4.17.1",
+    "express": "^4.18.2",
     "express-session": "^1.17.0",
     "file-stream-rotator": "^0.5.5",
     "moment": "^2.24.0",
